@@ -26,6 +26,31 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+PowerShell에서 아래 오류가 나면 실행 정책 때문에 활성화 스크립트가 차단된 상태입니다.
+
+- 예: `Activate.ps1 : 이 시스템에서 스크립트를 실행할 수 없으므로 ...`
+
+해결 방법 1 (권장, 현재 터미널 세션에만 적용):
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+해결 방법 2 (현재 사용자 범위에 영구 적용):
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+.\.venv\Scripts\Activate.ps1
+```
+
+활성화 없이도 설치/실행은 가능합니다:
+
+```powershell
+.\.venv\Scripts\python -m pip install -r requirements.txt
+.\.venv\Scripts\python app/cli.py
+```
+
 ### macOS / Linux (bash/zsh)
 
 ```bash
